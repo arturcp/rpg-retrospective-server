@@ -1,0 +1,16 @@
+{
+  "name": "rpg-retrospective-server",
+  "version": "1.0.0",
+  "description": "Websocker server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "artur.prado@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "http": "*",
+    "websocket": "^1.0.34"
+  }
+}
