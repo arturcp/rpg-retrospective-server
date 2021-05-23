@@ -86,14 +86,16 @@ wsServer.on('request', (request) => {
           }
         */
 
-        players[value.characterName] = {
-          ...players[value.characterName],
+        const characterName = value.character.name;
+
+        players[characterName] = {
+          ...players[characterName],
           position: value.position,
           direction: value.direction,
           step: value.step
         }
 
-        broadcast('player-moved', players[value.characterName]);
+        broadcast('player-moved', players[characterName]);
       }
     }
   });
