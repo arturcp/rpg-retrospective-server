@@ -27,16 +27,17 @@ const broadcast = (type, message) => {
 wsServer.on('request', (request) => {
   var userID = getUniqueID();
 
-  // console.log((new Date()) + ' received a new connection from origin ' + request.origin + '.');
+  console.log((new Date()) + ' received a new connection from origin ' + request.origin + '.');
 
   const connection = request.accept(null, request.origin);
   clients[userID] = connection;
 
-  // Send the UserID to the client when it connects in the backend
+  // Send the UserID to the client when it connects to the backend
   connection.sendUTF(JSON.stringify({ type: 'client-connected', userID: userID }));
 
   connection.on('message', (message) => {
-    console.log(message);
+    console.log('Message arrived in the server: ');
+
     if (message.type === 'utf8') {
       console.log('Received message: ', message.utf8Data);
 
