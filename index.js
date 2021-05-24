@@ -63,11 +63,13 @@ wsServer.on('request', (request) => {
           }
         */
 
-        // Save character in a list
-        players[value.character.name] = value;
+        if (value.character.name && value.character.name !== '') {
+          // Save character in a list
+          players[value.character.name] = value;
 
-        // Broadcast list of characters to everyone
-        broadcast('new-player', players);
+          // Broadcast list of characters to everyone
+          broadcast('new-player', players);
+        }
       }
 
       if (type === 'player-moved') {
