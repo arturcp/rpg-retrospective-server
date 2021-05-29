@@ -1,3 +1,5 @@
+const colors = require('colors');
+
 const webSocketsServerPort = 8000;
 const webSocketServer = require('websocket').server;
 const http = require('http');
@@ -19,9 +21,11 @@ const getUniqueID = () => {
 };
 
 const broadcast = (type, message) => {
+  console.log(`Broadcasting ${type}...`);
   for(key in clients) {
     clients[key].sendUTF(JSON.stringify({ message: message, type: type }));
   }
+  console.log('Done');
 }
 
 wsServer.on('request', (request) => {
@@ -36,16 +40,21 @@ wsServer.on('request', (request) => {
   connection.sendUTF(JSON.stringify({ type: 'client-connected', userID: userID }));
 
   connection.on('message', (message) => {
-    console.log('Message arrived in the server: ');
+    console.log('');
+    console.log('===================================================================');
+    console.log('');
 
     if (message.type === 'utf8') {
-      console.log('Received message: ', message.utf8Data);
+      console.log('                         MESSAGE RECEIVED'.yellow);
+      console.log('');
 
       const payload = JSON.parse(message.utf8Data);
       const { type, value } = payload;
 
-      console.log('Message arrived: ', type);
-      console.log('message body: ', value)
+      console.log(`*  ${'Type'.bgCyan.black}: ${type}`);
+      console.log('* Body: ')
+      console.log(value);
+      console.log('');
 
       if (type === 'game-connection-request') {
         /*
@@ -99,6 +108,8 @@ wsServer.on('request', (request) => {
 
         broadcast('player-moved', players[characterName]);
       }
+
+      console.log('===================================================================');
     }
   });
 });
