@@ -69,7 +69,6 @@ const broadcast = (type, message) => {
       clients[key].sendUTF(JSON.stringify({ message: message, type: type }));
     }
   }
-  console.log('Done');
 }
 
 wsServer.on('request', (request) => {
@@ -106,7 +105,6 @@ wsServer.on('request', (request) => {
 
       // player has answered all the quizes
       if (type === 'quiz-completed') {
-        console.log('payload to add to docs: ', value);
         broadcast('quiz-answered', value);
       }
 
@@ -119,6 +117,11 @@ wsServer.on('request', (request) => {
       if (type === 'quiz-ready') {
         const response = quizService.quizReady(value, players);
         broadcast('quiz-ready', value);
+      }
+
+      // The admin has completed the quiz and is sending the results to everyone
+      if (type === 'quiz-results-ready') {
+        broadcast('quiz-results', { value, playersList: players });
       }
 
       if (type === 'disconnect-player') {
