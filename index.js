@@ -74,6 +74,7 @@ const broadcast = (type, message) => {
 }
 
 wsServer.on('connection', (connection) => {
+  console.log('connection...')
   var userID = getUniqueID();
 
   // const connection = request.accept(null, request.origin);
