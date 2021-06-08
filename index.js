@@ -1,15 +1,24 @@
 const colors = require('colors');
 
+const express = require('express');
+
+const PORT = process.env.PORT || 8000;
+const INDEX = '/index.html';
+
+const server = express()
+  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
 const movementService = require('./player-moved');
 const quizService = require('./quiz-ready');
 
 const webSocketsServerPort = 8000;
 const webSocketServer = require('websocket').server;
-const http = require('http');
+// const http = require('http');
 
-const server = http.createServer();
-server.listen(webSocketsServerPort);
-console.log('listening on port 8000');
+// const server = http.createServer();
+// server.listen(webSocketsServerPort);
+// console.log('listening on port 8000');
 
 const wsServer = new webSocketServer({
   httpServer: server
