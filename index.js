@@ -11,7 +11,7 @@ const server = express()
 
 const { Server } = require('ws');
 const wsServer = new Server({
-  port: 8000
+  server
 });
 
 const movementService = require('./player-moved');
